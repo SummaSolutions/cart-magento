@@ -44,9 +44,8 @@ class MercadoPago_Model_Standard_Payment extends Mage_Payment_Model_Method_Abstr
 		$core = Mage::getModel('mercadopago/core');
 		
 		//seta sdk php mercadopago
-		$client_id = Mage::getStoreConfig('payment/mercadopago/client_id');
-		$client_secret = Mage::getStoreConfig('payment/mercadopago/client_secret');
-		$mp = new MP($client_id, $client_secret);
+		$access_token = Mage::getStoreConfig('payment/mercadopago/access_token');
+		$mp = new MP($access_token);
 		
 		//monta a prefernecia
 		$pref = $this->makePreference();
@@ -156,7 +155,7 @@ class MercadoPago_Model_Standard_Payment extends Mage_Payment_Model_Method_Abstr
 		//adiciona o valor do frete para as variaveis bater
 		$total_item +=  (float) $order->getBaseShippingAmount();
 		
-		// if responsÃ¡vel por verificar se existe diferenÃ§a entre os preÃ§os,
+		// if responsável por verificar se existe diferença entre os preços,
 		// tanto maior quanto menor,
 		// calcula e adiciona como itens para ter o valor real do pedido
 		if($total_item > $order_amount || $total_item < $order_amount){
@@ -212,14 +211,14 @@ class MercadoPago_Model_Standard_Payment extends Mage_Payment_Model_Method_Abstr
 		}
 		
 		
-		//pega informaÂoes de cadastro do usuario
+		//pega informaoes de cadastro do usuario
 		$billing_address = $order->getBillingAddress();
 		$billing_address = $billing_address->getData();
 		
 		//formata a data do usuario para o padrao do mercado pago YYYY-MM-DDTHH:MM:SS
 		$arr['payer']['date_created'] = date('Y-m-d',$customer->getCreatedAtTimestamp()) . "T" . date('H:i:s',$customer->getCreatedAtTimestamp());
 		
-		//set informaÂoes do usuario
+		//set informaoes do usuario
 		$arr['payer']['email'] = htmlentities($customer->getEmail());
 		$arr['payer']['first_name'] = htmlentities($customer->getFirstname());
 		$arr['payer']['last_name'] = htmlentities($customer->getLastname());
@@ -247,7 +246,7 @@ class MercadoPago_Model_Standard_Payment extends Mage_Payment_Model_Method_Abstr
 		);
 		
 		//define a url de notificacao 
-		$arr['notification_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK,true) . "mercadopago/notifications?checkout=standard";
+		$arr['notification_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . "mercadopago/notifications/standard";
 		
 		//pega o email e o nome do usuario guest
 		if($arr['payer']['email'] == ""){
@@ -281,7 +280,7 @@ class MercadoPago_Model_Standard_Payment extends Mage_Payment_Model_Method_Abstr
 		}
 		
 		
-		//verifico se o sponsor Ã© diferente de null (se existe)
+		//verifico se o sponsor é diferente de null (se existe)
 		$sponsor_id = Mage::getStoreConfig('payment/mercadopago/sponsor_id');
 		Mage::helper('mercadopago')->log("Sponsor_id", 'mercadopago-standard.log', $sponsor_id);
 		if($sponsor_id != null && $sponsor_id != ""){

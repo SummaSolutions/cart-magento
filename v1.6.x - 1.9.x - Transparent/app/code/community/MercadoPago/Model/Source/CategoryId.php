@@ -32,10 +32,10 @@ class MercadoPago_Model_Source_CategoryId extends Mage_Payment_Model_Method_Abst
 		foreach($response as $v):
 			//force category others first
 			if($v['id'] == "others"):
-				$cat[0] = array('value' => $v['id'], 'label'=>Mage::helper('adminhtml')->__($v['description']));
+				$cat[0] = array('value' => $v['id'], 'label' => $v['description']);
 			else:
 				$count++;
-				$cat[$count] = array('value' => $v['id'], 'label'=>Mage::helper('adminhtml')->__($v['description']));
+				$cat[$count] = array('value' => $v['id'], 'label' => $v['description']);
 			endif;
 		
 		endforeach;

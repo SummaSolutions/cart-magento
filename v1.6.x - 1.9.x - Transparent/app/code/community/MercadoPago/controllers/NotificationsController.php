@@ -23,40 +23,17 @@ class MercadoPago_NotificationsController extends Mage_Core_Controller_Front_Act
 	protected $_sendemail = false;
 	protected $_hash = null;
 
-	public function indexAction(){
-		
-		$core = Mage::getModel('mercadopago/core');
-		
-		try {
-			$params = $this->getRequest()->getParams();
-			
-			//notification received
-			Mage::helper('mercadopago')->log("Received notification", 'mercadopago-notification.log', $params);
-			
-			if(isset($params['checkout']) && $params['checkout'] == "standard"){
-				Mage::helper('mercadopago')->log("Type: Standard", 'mercadopago-notification.log');
-				$this->standard($params);
-			}else{
-				Mage::helper('mercadopago')->log("Type: Custom", 'mercadopago-notification.log');
-				$this->custom($params);
-			}
-		} catch (Exception $e) {
-			Mage::helper('mercadopago')->log("error: " . $e, 'mercadopago-notification.log');
-			echo $e;
-			
-			//caso erro no processo de notificação de pagamento, mercadopago ira notificar novamente.
-			header(' ', true, 400);
-			exit;
-		}	
-	
-	}
 
-	public function standard($params){
+	public function standardAction(){
+			
+		//notification received
+		Mage::helper('mercadopago')->log("Standard Received notification", 'mercadopago-notification.log', $_REQUEST);
+			
 		$core = Mage::getModel('mercadopago/core');
 		
-		if (isset($params['id']) && isset($params['topic']) && $params['topic'] == 'merchant_order'){
+		if (isset($_REQUEST['id']) && isset($_REQUEST['topic']) && $_REQUEST['topic'] == 'merchant_order'){
 		
-			$response = $core->getMerchantOrder($params['id']);
+			$response = $core->getMerchantOrder($_REQUEST['id']);
 			Mage::helper('mercadopago')->log("Return merchant_order", 'mercadopago-notification.log', $response);
 			
 			if($response['status'] == 200 || $response['status'] == 201):
@@ -64,6 +41,7 @@ class MercadoPago_NotificationsController extends Mage_Core_Controller_Front_Act
 				$merchant_order = $response['response'];
 				$order = Mage::getModel('sales/order')->loadByIncrementId($merchant_order["external_reference"]);
 				
+				//FIXIT: PRECISA ALTERAR PARA PEGAR TODOS OS PAGAMENTOS APROVADOS E VALIDAR SE O VALOR APROVADO É MAIOR OU IGUAL AO VALOR DA TRANSAÇAO
 				if(count($merchant_order['payments']) > 0):
 				
 					//status final para pagamento com mais de um cartão
@@ -99,44 +77,60 @@ class MercadoPago_NotificationsController extends Mage_Core_Controller_Front_Act
 						//atualiza status da order de acordo com a notificação do pagamento
 						$this->setStatusOrder($data);
 					endif;
+					
+					//forca return
+					return;
 				endif;
-			else:
-				Mage::helper('mercadopago')->log("Merchant Order not found", 'mercadopago-notification.log');
-				throw new Exception('Merchant Order not found');
 			endif;
 		}
+		
+		Mage::helper('mercadopago')->log("Merchant Order not found", 'mercadopago-notification.log', $_REQUEST);
+		echo "Merchant Order not found";
+		$this->getResponse()->setHeader('HTTP/1.0','404',true);
 	}
 
-	public function custom($params){
+	public function customAction(){
+		//notification received
+		Mage::helper('mercadopago')->log("Custom Received notification", 'mercadopago-notification.log', $_REQUEST);
+		
 		$core = Mage::getModel('mercadopago/core');
 		
-		if (isset($params['id']) && isset($params['topic']) && $params['topic'] == 'payment'){
+		if (isset($_REQUEST['data_id']) && isset($_REQUEST['type']) && $_REQUEST['type'] == 'payment'){
 		
-			$response = $core->getPayment($params['id']);
+			$response = $core->getPaymentV1($_REQUEST['data_id']);
 			Mage::helper('mercadopago')->log("Return payment", 'mercadopago-notification.log', $response);
-			
+
 			if($response['status'] == 200 || $response['status'] == 201):
-				$payment = $response['response']['collection'];
+				$payment = $response['response'];
 				
 				//Atualiza informações da order
-				$data = $this->formatArrayPayment(array(), $payment);
-				$this->updateOrder($data);
+				$payment["trunc_card"] = "xxxx xxxx xxxx " . $payment['card']["last_four_digits"];
+				$payment["cardholder_name"] = $payment['card']["cardholder"]["name"];
+				$payment['payer_first_name'] = $payment['payer']['first_name'];
+				$payment['payer_last_name'] = $payment['payer']['last_name'];
+				$payment['payer_email'] = $payment['payer']['email'];
+		
+				$this->updateOrder($payment);
 				
 				//atualiza status da order de acordo com a notificação do pagamento
 				$this->setStatusOrder($payment);
-				
-			else:
-				Mage::helper('mercadopago')->log("Payment not found", 'mercadopago-notification.log');
-				throw new Exception('Payment not found');
+				//forca return
+				return;
 			endif;
 		
 		}
+		
+		Mage::helper('mercadopago')->log("Payment not found", 'mercadopago-notification.log', $_REQUEST);
+		echo "Payment not found";
+		$this->getResponse()->setHeader('HTTP/1.0','404',true);
 	}
 	
 	/*
 	* Funcao responsavel por adicionar informação do pagamento no pedido
 	*/
 	function updateOrder($data){
+		Mage::helper('mercadopago')->log("Update Order", 'mercadopago-notification.log');
+		
 		try {
 			$core = Mage::getModel('mercadopago/core');
 			$order = Mage::getModel('sales/order')->loadByIncrementId($data["external_reference"]);
@@ -182,15 +176,14 @@ class MercadoPago_NotificationsController extends Mage_Core_Controller_Front_Act
 		} catch (Exception $e) {
 			Mage::helper('mercadopago')->log("erro in update order status: " . $e, 'mercadopago-notification.log');
 			echo $e;
-			
-			//caso erro no processo de notificação de pagamento, mercadopago ira notificar novamente.
-			header(' ', true, 400);
-			exit;
+			$this->getResponse()->setHeader('HTTP/1.0','404',true);
 		}
 	}
 
 	
 	function setStatusOrder($payment){
+		Mage::helper('mercadopago')->log("Set Status Order", 'mercadopago-notification.log');
+		
 		try {
 			$core = Mage::getModel('mercadopago/core');
 			Mage::helper('mercadopago')->log("Received Payment data", 'mercadopago-notification.log', $payment);
@@ -285,18 +278,18 @@ class MercadoPago_NotificationsController extends Mage_Core_Controller_Front_Act
 		} catch (Exception $e) {
 			Mage::helper('mercadopago')->log("erro in set order status: " . $e, 'mercadopago-notification.log');
 			echo $e;
-			
-			//caso erro no processo de notificação de pagamento, mercadopago ira notificar novamente.
-			header(' ', true, 400);
-			exit;
+			$this->getResponse()->setHeader('HTTP/1.0','404',true);
 		}
 	}
 
-/*
-* Funcao responsavel por formatar o array para atualizar informações do pedido
-*/
+	/*
+	* FIXIT: DELETAR E SUBSTITUIR POR ARRAY MONTADO DIRETO NA FUNCION
+	* Funcao responsavel por formatar o array para atualizar informações do pedido
+	*/
 	
 	function formatArrayPayment($data, $payment){
+		Mage::helper('mercadopago')->log("Format Array", 'mercadopago-notification.log');
+		
 		$fields = array(
 			"status",
 			"status_detail",
