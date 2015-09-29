@@ -19,11 +19,12 @@ class MercadoPago_Model_Source_Country extends Mage_Payment_Model_Method_Abstrac
     public function toOptionArray (){
 
 		$country = array();
-		$country[] = array('value' => "mla", 'label'=>Mage::helper('adminhtml')->__("Argentina"));
-		$country[] = array('value' => "mlb", 'label'=>Mage::helper('adminhtml')->__("Brasil"));
-		$country[] = array('value' => "mco", 'label'=>Mage::helper('adminhtml')->__("Colombia"));
-		$country[] = array('value' => "mlm", 'label'=>Mage::helper('adminhtml')->__("Mexico"));
-		$country[] = array('value' => "mlc", 'label'=>Mage::helper('adminhtml')->__("Chile"));
+		$country[] = array('value' => "mla", 'label'=> "Argentina");
+		$country[] = array('value' => "mlb", 'label'=> "Brasil");
+		$country[] = array('value' => "mco", 'label'=> "Colombia");
+		$country[] = array('value' => "mlm", 'label'=> "Mexico");
+		$country[] = array('value' => "mlc", 'label'=> "Chile");
+		$country[] = array('value' => "mlv", 'label'=> "Venezuela");
 		
 		//force order by key
 		ksort($country);

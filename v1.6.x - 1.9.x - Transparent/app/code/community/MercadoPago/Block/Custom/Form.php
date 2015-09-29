@@ -30,10 +30,12 @@ class MercadoPago_Block_Custom_Form extends Mage_Payment_Block_Form_Cc{
     
         //init js no header
         $block = Mage::app()->getLayout()->createBlock('core/text', 'js_mercadopago');
+        
         $block->setText(
             sprintf(
                 '
-                <script type="text/javascript">var PublicKeyMercadoPagoTransparent = "' . $public_key .'";</script>
+                <script type="text/javascript">var PublicKeyMercadoPagoCustom = "' . $public_key .'";</script>
+                <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
                 <script type="text/javascript" src="%s"></script>',
                 Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS, true) . 'mercadopago/mercadopago.js'
             )
@@ -68,5 +70,12 @@ class MercadoPago_Block_Custom_Form extends Mage_Payment_Block_Form_Cc{
         }
         
         return $types;
+    }
+    
+    function getCustomerAndCards(){
+        $customer = Mage::getModel('mercadopago/custom_payment')->getCustomerAndCards();
+        
+        return $customer;
+        
     }
 }

@@ -21,9 +21,9 @@ class MercadoPago_Model_Source_TypeCheckout extends Mage_Payment_Model_Method_Ab
     public function toOptionArray (){
     
 		$arr = array(
-			array("value"=> "iframe", 'label'=>Mage::helper('adminhtml')->__("Iframe")),
-			array("value"=> "redirect", 'label'=>Mage::helper('adminhtml')->__("Redirect")),
-			array("value"=> "lightbox", 'label'=>Mage::helper('adminhtml')->__("Lightbox"))
+			array("value"=> "iframe", 'label' => "Iframe"),
+			array("value"=> "redirect", 'label' => "Redirect"),
+			array("value"=> "lightbox", 'label' => "Lightbox")
 		);
 		
 		return $arr;

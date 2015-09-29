@@ -85,7 +85,7 @@
 "Click on the link to generate the ticket", "Clique no link para gerar o boleto"
 "Generate Ticket", "Gerar Boleto"
 
-"Payment Method", "Método de Pagamento"
+"Payment Method", "Meio de pagamento"
 
 "Generate the ticket and pay it wherever you want.", "Gere o boleto e pague-o onde quiser."
 "Will be approved within 2 business days.","Será aprovado até 2 dias úteis."
@@ -146,5 +146,10 @@
 "Choice", "Escolha"
 "Default issuer", "Qualquer Banco"
 
-"Get your public_key in the following address: https://www.mercadopago.com/mlb/account/credentials","Obtenha seu public_key no seguinte endereço: https://www.mercadopago.com/mlb/account/credentials"
 "Choose the status when payment was chargeback", "Escolha o status dos pedidos para pagamentos com status Chargeback"
+
+"Get your public_key in the following address: https://www.mercadopago.com/mlb/account/credentials","Obtenha a sua public_key no endereço: https://www.mercadopago.com/mlb/account/credentials"
+"Get your access_token in the following address: https://www.mercadopago.com/mlb/account/credentials","Obtenha o seu access_token no endereço: https://www.mercadopago.com/mlb/account/credentials"
+"Statement Descriptor","Identificação na Fatura"
+"Check availability for your country","Verifique a disponibilidade para o seu país"
+"ended in", "terminado em"
