@@ -1,7 +1,7 @@
 Feature: MercadoEnvios configuration
 
   Background:
-    Given I am admin logged in as "admin" "Summa2015"
+    Given I am admin logged in as "admin" "MercadoPago2015"
     And Setting Config "general/locale/code" is "en_US"
 
   @ADMIN
