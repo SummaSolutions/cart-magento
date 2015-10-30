@@ -472,4 +472,18 @@ class FeatureContext
         throw new ExpectationException('I am not stay in '.$arg1, $this->getSession()->getDriver());
 
     }
+
+    /**
+     * @Given I open :arg1 configuration
+     */
+    public function iOpenConfiguration($arg1)
+    {
+        if ($this->findElement('#' . $arg1. '-head')->hasClass('open')) {
+            return;
+        }
+        $this->getSession()->getDriver()->executeScript("
+            Fieldset.toggleCollapse('. $arg1 .', 'http://mercadopago.local/index.php/admin/system_config/state/'); return false;"
+        );
+    }
+
 }

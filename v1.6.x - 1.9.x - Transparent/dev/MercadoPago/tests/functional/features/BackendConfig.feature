@@ -7,8 +7,9 @@ Feature: MercadoEnvios configuration
   @ADMIN
   Scenario: Check disabled legend
     Given Setting config "payment/mercadopago_standard/active" is "0"
-    
+
     When I am on page "index.php/admin/system_config/edit/section/carriers"
+    And I open "carriers_mercadoenvios_carrier" configuration
     
     Then I should see html "Checkout Classic Method must be enabled"
 
@@ -17,6 +18,7 @@ Feature: MercadoEnvios configuration
     Given Setting config "payment/mercadopago_standard/active" is "1"
 
     When I am on page "index.php/admin/system_config/edit/section/carriers"
+    And I open "carriers_mercadoenvios_carrier" configuration
 
     Then I should not see "Checkout Classic Method must be enabled"
 
@@ -24,6 +26,7 @@ Feature: MercadoEnvios configuration
   Scenario: See Magento product attributes repeat error
     Given Setting config "payment/mercadopago_standard/active" is "1"
     And I am on page "index.php/admin/system_config/edit/section/carriers"
+    And I open "carriers_mercadoenvios_carrier" configuration
     And I press ".meli-btn.button" element
     And I Select option field "carriers_mercadoenvios_active" with "1"
 
@@ -39,6 +42,7 @@ Feature: MercadoEnvios configuration
   Scenario: See MercadoEnvios product attributes repeat error
     Given Setting config "payment/mercadopago_standard/active" is "1"
     And I am on page "index.php/admin/system_config/edit/section/carriers"
+    And I open "carriers_mercadoenvios_carrier" configuration
     And I press ".meli-btn.button" element
     And I Select option field "carriers_mercadoenvios_active" with "1"
 
@@ -54,6 +58,7 @@ Feature: MercadoEnvios configuration
   Scenario: See MercadoEnvios product attributes saved ok
     Given Setting config "payment/mercadopago_standard/active" is "1"
     And I am on page "index.php/admin/system_config/edit/section/carriers"
+    And I open "carriers_mercadoenvios_carrier" configuration
     And I press ".meli-btn.button" element
     And I Select option field "carriers_mercadoenvios_active" with "1"
 
@@ -74,6 +79,7 @@ Feature: MercadoEnvios configuration
   Scenario: See MercadoEnvios configuration fields
     Given Setting config "payment/mercadopago_standard/active" is "1"
     And I am on page "index.php/admin/system_config/edit/section/carriers"
+    And I open "carriers_mercadoenvios_carrier" configuration
     And I press ".meli-btn.button" element
     And I Select option field "carriers_mercadoenvios_active" with "1"
     And I select option field "carriers_mercadoenvios_sallowspecific" with "1"
