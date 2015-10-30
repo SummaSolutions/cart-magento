@@ -1,11 +1,11 @@
-Feature: Payment results in MercadoPago Custom Checkout
+Feature: MercadoEnvios configuration
 
   Background:
     Given I am admin logged in as "admin" "Summa2015"
     And Setting Config "general/locale/code" is "en_US"
 
   @ADMIN
-  Scenario: See payment approved
+  Scenario: Check disabled legend
     Given Setting config "payment/mercadopago_standard/active" is "0"
     
     When I am on page "index.php/admin/system_config/edit/section/carriers"
@@ -13,14 +13,14 @@ Feature: Payment results in MercadoPago Custom Checkout
     Then I should see html "Checkout Classic Method must be enabled"
 
   @ADMIN
-  Scenario: See payment approved
+  Scenario: Check enabled legend
     Given Setting config "payment/mercadopago_standard/active" is "1"
 
     When I am on page "index.php/admin/system_config/edit/section/carriers"
 
     Then I should not see "Checkout Classic Method must be enabled"
 
-  @ATT
+  @ATTRIBUTES
   Scenario: See Magento product attributes repeat error
     Given Setting config "payment/mercadopago_standard/active" is "1"
     And I am on page "index.php/admin/system_config/edit/section/carriers"
@@ -35,7 +35,7 @@ Feature: Payment results in MercadoPago Custom Checkout
     And I press ".scalable.save" element
     Then I should see html "Cannot repeat Magento Product size attributes"
 
-  @ATT
+  @ATTRIBUTES
   Scenario: See MercadoEnvios product attributes repeat error
     Given Setting config "payment/mercadopago_standard/active" is "1"
     And I am on page "index.php/admin/system_config/edit/section/carriers"
@@ -50,7 +50,7 @@ Feature: Payment results in MercadoPago Custom Checkout
     And I press ".scalable.save" element
     Then I should see html "Cannot repeat MercadoEnvios Product size attributes"
 
-  @ATT
+  @ATTRIBUTES
   Scenario: See MercadoEnvios product attributes saved ok
     Given Setting config "payment/mercadopago_standard/active" is "1"
     And I am on page "index.php/admin/system_config/edit/section/carriers"
@@ -70,7 +70,7 @@ Feature: Payment results in MercadoPago Custom Checkout
     And I press ".scalable.save" element
     Then I should see html "The configuration has been saved."
 
-  @ATT
+  @ATTRIBUTES
   Scenario: See MercadoEnvios configuration fields
     Given Setting config "payment/mercadopago_standard/active" is "1"
     And I am on page "index.php/admin/system_config/edit/section/carriers"
