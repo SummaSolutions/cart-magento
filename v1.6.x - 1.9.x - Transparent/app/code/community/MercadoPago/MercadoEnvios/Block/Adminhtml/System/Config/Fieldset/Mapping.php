@@ -24,7 +24,7 @@ class MercadoPago_MercadoEnvios_Block_Adminhtml_System_Config_Fieldset_Mapping
         parent::__construct();
     }
 
-    protected function getMagentoAttributes()
+    protected function _getAttributes()
     {
         $attributes = Mage::getResourceModel('catalog/product_attribute_collection')
             ->addFieldToFilter('is_visible', 1)
@@ -34,11 +34,11 @@ class MercadoPago_MercadoEnvios_Block_Adminhtml_System_Config_Fieldset_Mapping
         return $attributes;
     }
 
-    protected function getStoredMappingValues()
+    protected function _getStoredMappingValues()
     {
         $prevValues = [];
         foreach ($this->getArrayRows() as $_row) {
-            $prevValues[] = ['MagentoCode' => $_row->getData('MagentoCode'), 'OcaCode' => $_row->getData('OcaCode'), 'Unit' => $_row->getData('Unit')];
+            $prevValues[] = ['MagentoCode' => $_row->getData('MagentoCode'), 'MeCode' => $_row->getData('MeCode'), 'Unit' => $_row->getData('Unit')];
         }
 
         return $prevValues;
