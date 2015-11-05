@@ -20,7 +20,7 @@ class MercadoPago_MercadoEnvios_Model_Adminhtml_Attribute_Validation_Mapping
             }
 
             $magentoCodes[] = $value['MagentoCode'];
-            $ocaCodes[] = $value['MeCode'];
+            $meCodes[] = $value['MeCode'];
         }
 
         return parent::save();
