@@ -548,7 +548,7 @@ class FeatureContext
 
     /**
      * @AfterScenario @Availability
-     * @AfterFeature @MethodsPerCountry
+     * @AfterScenario @MethodsPerCountry
      * @AfterFeature @reset_configs
      * @AfterFeature @FreeShipping
      */
@@ -798,7 +798,7 @@ class FeatureContext
      */
     public function iEnableMethods($methods)
     {
-        $this->settingConfig('carriers/mercadoenvios/availablemethods', "73328,73330");
+        $this->settingConfig('carriers/mercadoenvios/availablemethods', $methods);
     }
 
     /**
@@ -848,6 +848,9 @@ class FeatureContext
             $this->settingConfig('payment/mercadopago_custom_checkout/public_key', $publicKey);
             $this->settingConfig('payment/mercadopago_custom_checkout/access_token', $accessToken);
         }
+
+        $code = Mage::getModel('mercadopago/source_country')->getCodeByValue($arg1);
+        $this->settingConfig('carriers/mercadoenvios/specificcountry', $code);
     }
 
     /**
