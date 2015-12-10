@@ -11,6 +11,7 @@ if (typeof PublicKeyMercadoPagoCustom != "undefined") {
     Mercadopago.setPublishableKey(PublicKeyMercadoPagoCustom);
 }
 
+
 // Inicializa o formulario de pagamento com cartão de credito
 function initMercadoPagoJs() {
     showLogMercadoPago("Init MercadoPago JS");
@@ -46,7 +47,7 @@ function initMercadoPagoJs() {
     //inicia o formulario verificando se ja tem cartão selecionado para obter o bin
     cardsHandler();
 
-    if (TinyJ('#p_method_mercadopago_custom').is(':checked')) {
+    if (TinyJ('#p_method_mercadopago_custom').isChecked()) {
         payment.switchMethod('mercadopago_custom');
     }
 
@@ -105,7 +106,7 @@ function initMercadoPagoOCP() {
 }
 
 function setTotalAmount(){
-    TinyJ('.total_amount').val(TinyJ('option:checked', this).attribute('cost'));
+    jQuery('.total_amount').val(TinyJ(this).getSelectedOption().attr('cost'));
 }
 
 function defineInputs() {
@@ -161,6 +162,7 @@ function defineInputs() {
     return data_inputs;
 
 }
+
 
 function setRequiredFields(required) {
     if (required) {
@@ -261,7 +263,7 @@ function cardsHandler() {
     // se ele foi selecionado
     // e se o formulário esta ativo, pois o cliente pode estar digitando o cartão
     if (one_click_pay == true) {
-        var selectedCard = TinyJ('#cardId option:checked');
+        var selectedCard = cardSelector.getSelectedOption();
         if(selectedCard.val() != "-1"){
             var _bin = selectedCard.attribute("first_six_digits");
             Mercadopago.getPaymentMethod({"bin": _bin}, setPaymentMethodInfo);
@@ -275,7 +277,7 @@ function getBin() {
     showLogMercadoPago("Get bin");
 
     try{
-        var cardSelector = TinyJ("#cardId option:checked"); 
+        var cardSelector = TinyJ("#cardId").getSelectedOption(); 
     }
     catch(err){
         return;
@@ -582,10 +584,16 @@ function releaseEventCreateCardToken() {
 
     var data_checkout = TinyJ("[data-checkout]");
 
-    for (var x = 0; x < data_checkout.length; x++) {
-        data_checkout[x].focusout(checkCreateCardToken);
-        data_checkout[x].change(checkCreateCardToken);
+    if (Array.isArray(data_checkout)){
+        for (var x = 0; x < data_checkout.length; x++) {
+            data_checkout[x].focusout(checkCreateCardToken);
+            data_checkout[x].change(checkCreateCardToken);
+        }
+    }else{
+        data_checkout.focusout(checkCreateCardToken);
+        data_checkout.change(checkCreateCardToken);
     }
+    
 }
 
 //verifica se os inputs estão preenchidos
@@ -648,9 +656,12 @@ function sdkResponseHandler(status, response) {
     showLogMercadoPago("Hide all errors ...");
     // hide todas as mensagens de errors
     var all_message_errors = TinyJ('.message-error');
-
-    for (var x = 0; x < all_message_errors.length; x++) {
-        all_message_errors[x].hide();
+    if(Array.isArray(all_message_errors)){
+        for (var x = 0; x < all_message_errors.length; x++) {
+            all_message_errors[x].hide();
+        }
+    }else{
+        all_message_errors.hide();
     }
 }
 
@@ -659,12 +670,15 @@ function showMessageErrorForm(el_error) {
     showLogMercadoPago(el_error);
 
     var el_message = TinyJ(el_error);
-
-    for (var x = 0; x < el_message.length; x++) {
-        el_message[x].show();
+    if(Array.isArray(el_message)){
+        for (var x = 0; x < el_message.length; x++) {
+            el_message[x].show();
+        }
+    }else{
+        el_message.show();
     }
-}
 
+}
 
 function showLoading() {
     showLogMercadoPago("Show loading...");
