@@ -11,144 +11,173 @@ var MercadoPagoCustom = (function () {
         }
     };
     var self = {
-            messages: {
-                init: 'Init MercadoPago JS',
-                initOCP: 'Init MercadoPago OCP',
-                initDiscount: 'Init MercadoPago Custom Discount',
-                initTicket: 'Init MercadoPago Custom Ticket',
-                mpIncorrectlyConfigured: 'MercadoPago was not configured correctly. Public Key not found.',
-                publicKey: 'Public Key: {0}',
-                siteId: 'SITE_ID: {0}',
-                invalidDocument: 'Document Number is invalid.',
-                incorrectExpDate: 'Incorrect credit card expiration date.',
-                defineInputs: 'Define Inputs',
-                ocpUser: 'Action One Click Pay User',
-                clearOpts: 'Clear Option',
-                getBin: 'Get bin',
-                guessingPayment: 'Guessing Payment',
-                setPaymentInfo: 'Set payment method info: ',
-                issuerMandatory: 'Issuer is mandatory? {0}',
-                setIssuer: 'Set Issuer...',
-                setInstallment: 'Set install by issuer id',
-                getInstallment: 'Get Installments',
-                usingMagentoCustomCheckout: 'Using checkout customized Magento...',
-                usingMagentoStdCheckout: 'Using checkout standard Magento...',
-                getAmountSuccess: 'Success in get amount: ',
-                installmentAmount: 'Valor para calculo da parcela: {0}',
-                customDiscountAmount: 'Valor do desconto: {0}',
-                finalAmount: 'Valor final: {0}',
-                getAmountError: 'Error getting amount: ',
-                setInstallmentInfo: 'Set Installment info',
-                issuerSet: 'Issuer set: {0}',
-                releasecardTokenEvent: 'Release event create card token',
-                checkCreateCardToken: 'Check create card token',
-                responseCardToken: 'Response create/update card_token: ',
-                hideErrors: 'Hiding all errors...',
-                showingError: 'Show Message Error Form',
-                showLoading: 'Show loading...',
-                hideLoading: 'Hide loading...',
-                validateDiscount: 'Valid Discount',
-                validateCouponResponse: 'Validating coupon response : ',
-                removeDiscount: 'Remove Discount',
-                removeCoupon: 'Remove coupon!',
-                hideCouponMessages: 'Hide all coupon messages...',
-                ocpActivatedFormat: 'OCP? {0}',
-                cardHandler: 'card Handler'
-            },
-            constants: {
-                option: 'option',
-                undefined: 'undefined',
-                default: 'default',
-                checkout: 'checkout',
-                mexico: 'MLM',
-                brazil: 'MLB',
-                mercadopagoCustom: 'mercadopago_custom',
-                validateDiscount: 'validate-discount',
-                validateDocNumber: 'mp-validate-docnumber',
-                validateCC: 'mp-validate-cc-exp',
-                invalidCoupon: 'invalid_coupon',
-                cost: 'cost',
-                dataElementId: 'data-element-id',
-                style: 'style',
-                requireEntry: 'required-entry',
-                validateSelect: 'validate-select',
-                keyup: 'keyup',
-                firstSixDigits: 'first_six_digits',
-                backgroundUrlFormat: 'url({0}) no-repeat'
-            },
-            selectors: {
-                checkoutCustom: '#mercadopago_checkout_custom',
-                checkoutTicket: '#mercadopago_checkout_custom_ticket',
-                siteId: '.site_id',
-                cardNumberInput: 'input[data-checkout="cardNumber"]',
-                installmentsDontWork: '.error-installment-not-work',
-                mercadopagoCustomOpt: '#p_method_mercadopago_custom',
-                cardExpYear: '#cardExpirationYear',
-                docType: '#docType',
-                cardId: 'select[data-checkout="cardId"]',
-                returnToCardList: '#return_list_card_mp',
-                useOtherCard: '#use_other_card_mp',
-                installments: '#installments',
-                totalAmount: '.total_amount',
-                amount: '.amount',
-                cardNumber: '#cardNumber',
-                issuer: '#issuer',
-                issuerMp: '#issuer__mp',
-                issuerId: 'issuer_id',
-                cardExpirationMonth: '#cardExpirationMonth',
-                cardHolder: '#cardholderName',
-                docNumber: '#docNumber',
-                securityCode: '#securityCode',
-                securityCodeOCP: '#securityCodeOCP',
-                dataCheckout: '[data-checkout]',
-                oneClickPayment: '#mercadopago_checkout_custom #one_click_pay_mp',
-                installmentText: '.mercadopago-text-installment',
-                paymentMethodId: '#mercadopago_checkout_custom .payment_method_id',
-                paymenMethodNotFound: '.error-payment-method-not-found',
-                mercadoPagoTextChoice: '.mercadopago-text-choice',
-                errorMethodMinAmount: '.error-payment-method-min-amount',
-                textDefaultIssuer: '.mercadopago-text-default-issuer',
-                customCard: '#mercadopago_checkout_custom_card',
-                ocp: '#mercadopago_checkout_custom_ocp',
-                mercadoRoute: '.mercado_route',
-                baseUrl: '.mercado_base_url',
-                loading: '#mercadopago-loading',
-                messageError: '.message-error',
-                customDiscountAmount: '#mercadopago_checkout_custom .mercadopago-discount-amount',
-                discountAmount:'.mercadopago-discount-amount',
-                token: '#mercadopago_checkout_custom .token',
-                errorFormat: '.error-{0}',
-                couponActionApply: '#mercadopago_checkout_custom .mercadopago-coupon-action-apply',
-                couponActionRemove: '#mercadopago_checkout_custom .mercadopago-coupon-action-remove',
-                ticketActionApply: '#mercadopago_checkout_custom_ticket .mercadopago-coupon-action-apply',
-                ticketActionRemove: '#mercadopago_checkout_custom_ticket .mercadopago-coupon-action-remove',
-                coupon: '.mercadopago_coupon',
-                couponLoading: '.mercadopago-message-coupon .loading',
-                couponList: 'mercadopago-message-coupon li',
-                textCurrency: '.mercadopago-text-currency',
-                discountOk: '.mercadopago-message-coupon .discount-ok',
-                messageCoupon: '.mercadopago-message-coupon',
-                discountOkAmountDiscount: '.mercadopago-message-coupon .discount-ok .amount-discount',
-                discountOkTotalAmount: '.mercadopago-message-coupon .discount-ok .total-amount',
-                discountOkTotalAmountDiscount: '.mercadopago-message-coupon .discount-ok .total-amount-discount',
-                discountOkTerms: '.mercadopago-message-coupon .discount-ok .mercadopago-coupon-terms',
-                inputCouponDiscount: '#input-coupon-discount'
+        messages: {
+            init: 'Init MercadoPago JS',
+            initOCP: 'Init MercadoPago OCP',
+            initDiscount: 'Init MercadoPago Custom Discount',
+            initTicket: 'Init MercadoPago Custom Ticket',
+            mpIncorrectlyConfigured: 'MercadoPago was not configured correctly. Public Key not found.',
+            publicKey: 'Public Key: {0}',
+            siteId: 'SITE_ID: {0}',
+            invalidDocument: 'Document Number is invalid.',
+            incorrectExpDate: 'Incorrect credit card expiration date.',
+            defineInputs: 'Define Inputs',
+            ocpUser: 'Action One Click Pay User',
+            clearOpts: 'Clear Option',
+            getBin: 'Get bin',
+            guessingPayment: 'Guessing Payment',
+            setPaymentInfo: 'Set payment method info: ',
+            issuerMandatory: 'Issuer is mandatory? {0}',
+            setIssuer: 'Set Issuer...',
+            setInstallment: 'Set install by issuer id',
+            getInstallment: 'Get Installments',
+            usingMagentoCustomCheckout: 'Using checkout customized Magento...',
+            usingMagentoStdCheckout: 'Using checkout standard Magento...',
+            getAmountSuccess: 'Success in get amount: ',
+            installmentAmount: 'Valor para calculo da parcela: {0}',
+            customDiscountAmount: 'Valor do desconto: {0}',
+            finalAmount: 'Valor final: {0}',
+            getAmountError: 'Error getting amount: ',
+            setInstallmentInfo: 'Set Installment info',
+            issuerSet: 'Issuer set: {0}',
+            releasecardTokenEvent: 'Release event create card token',
+            checkCreateCardToken: 'Check create card token',
+            responseCardToken: 'Response create/update card_token: ',
+            hideErrors: 'Hiding all errors...',
+            showingError: 'Show Message Error Form',
+            showLoading: 'Show loading...',
+            hideLoading: 'Hide loading...',
+            validateDiscount: 'Valid Discount',
+            validateCouponResponse: 'Validating coupon response : ',
+            removeDiscount: 'Remove Discount',
+            removeCoupon: 'Remove coupon!',
+            hideCouponMessages: 'Hide all coupon messages...',
+            ocpActivatedFormat: 'OCP? {0}',
+            cardHandler: 'card Handler'
+        },
+        constants: {
+            option: 'option',
+            undefined: 'undefined',
+            default: 'default',
+            checkout: 'checkout',
+            mexico: 'MLM',
+            brazil: 'MLB',
+            mercadopagoCustom: 'mercadopago_custom',
+            validateDiscount: 'validate-discount',
+            validateDocNumber: 'mp-validate-docnumber',
+            validateCC: 'mp-validate-cc-exp',
+            invalidCoupon: 'invalid_coupon',
+            cost: 'cost',
+            dataElementId: 'data-element-id',
+            style: 'style',
+            requireEntry: 'required-entry',
+            validateSelect: 'validate-select',
+            keyup: 'keyup',
+            firstSixDigits: 'first_six_digits',
+            backgroundUrlFormat: 'url({0}) no-repeat'
+        },
+        selectors: {
+            checkoutCustom: '#mercadopago_checkout_custom',
+            checkoutTicket: '#mercadopago_checkout_custom_ticket',
+            siteId: '.site_id',
+            cardNumberInput: 'input[data-checkout="cardNumber"]',
+            installmentsDontWork: '.error-installment-not-work',
+            mercadopagoCustomOpt: '#p_method_mercadopago_custom',
+            cardExpYear: '#cardExpirationYear',
+            docType: '#docType',
+            cardId: 'select[data-checkout="cardId"]',
+            returnToCardList: '#return_list_card_mp',
+            useOtherCard: '#use_other_card_mp',
+            installments: '#installments',
+            totalAmount: '.total_amount',
+            amount: '.amount',
+            cardNumber: '#cardNumber',
+            issuer: '#issuer',
+            issuerMp: '#issuer__mp',
+            issuerId: 'issuer_id',
+            cardExpirationMonth: '#cardExpirationMonth',
+            cardHolder: '#cardholderName',
+            docNumber: '#docNumber',
+            securityCode: '#securityCode',
+            securityCodeOCP: '#securityCodeOCP',
+            dataCheckout: '[data-checkout]',
+            oneClickPayment: '#mercadopago_checkout_custom #one_click_pay_mp',
+            installmentText: '.mercadopago-text-installment',
+            paymentMethodId: '#mercadopago_checkout_custom .payment_method_id',
+            paymenMethodNotFound: '.error-payment-method-not-found',
+            mercadoPagoTextChoice: '.mercadopago-text-choice',
+            errorMethodMinAmount: '.error-payment-method-min-amount',
+            textDefaultIssuer: '.mercadopago-text-default-issuer',
+            customCard: '#mercadopago_checkout_custom_card',
+            ocp: '#mercadopago_checkout_custom_ocp',
+            mercadoRoute: '.mercado_route',
+            baseUrl: '.mercado_base_url',
+            loading: '#mercadopago-loading',
+            messageError: '.message-error',
+            customDiscountAmount: '#mercadopago_checkout_custom .mercadopago-discount-amount',
+            discountAmount: '.mercadopago-discount-amount',
+            token: '#mercadopago_checkout_custom .token',
+            errorFormat: '.error-{0}',
+            couponActionApply: '#mercadopago_checkout_custom .mercadopago-coupon-action-apply',
+            couponActionRemove: '#mercadopago_checkout_custom .mercadopago-coupon-action-remove',
+            ticketActionApply: '#mercadopago_checkout_custom_ticket .mercadopago-coupon-action-apply',
+            ticketActionRemove: '#mercadopago_checkout_custom_ticket .mercadopago-coupon-action-remove',
+            coupon: '.mercadopago_coupon',
+            couponLoading: '.mercadopago-message-coupon .loading',
+            couponList: 'mercadopago-message-coupon li',
+            textCurrency: '.mercadopago-text-currency',
+            discountOk: '.mercadopago-message-coupon .discount-ok',
+            messageCoupon: '.mercadopago-message-coupon',
+            discountOkAmountDiscount: '.mercadopago-message-coupon .discount-ok .amount-discount',
+            discountOkTotalAmount: '.mercadopago-message-coupon .discount-ok .total-amount',
+            discountOkTotalAmountDiscount: '.mercadopago-message-coupon .discount-ok .total-amount-discount',
+            discountOkTerms: '.mercadopago-message-coupon .discount-ok .mercadopago-coupon-terms',
+            inputCouponDiscount: '#input-coupon-discount'
 
-            },
-            url: {
-                amount: 'mercadopago/api/amount',
-                couponUrlFormat: 'mercadopago/api/coupon?id={0}',
-                termsUrlFormat: "https://api.mercadolibre.com/campaigns/{0}/terms_and_conditions?format_type=html"
-            }
-            ,
-            enableLog: true
-        }
-        ;
+        },
+        url: {
+            amount: 'mercadopago/api/amount',
+            couponUrlFormat: 'mercadopago/api/coupon?id={0}',
+            termsUrlFormat: "https://api.mercadolibre.com/campaigns/{0}/terms_and_conditions?format_type=html"
+        },
+        enableLog: true
+    };
+
+    function getMessages() {
+        return self.messages;
+    }
+
+    function getConstants() {
+        return self.constants;
+    }
+
+    function getSelectors() {
+        return self.selectors;
+    }
+
+    function getUrls() {
+        return self.url;
+    }
 
     function setMessages(messages) {
         self.messages = messages;
     }
 
+    function setConstants(constants) {
+        self.constants = constants;
+    }
+
+    function setSelectors(selectors) {
+        self.selectors = selectors;
+    }
+
+    function setUrls(urls) {
+        self.url = urls;
+    }
+
+    function isLogEnabled(){
+        return self.enableLog;
+    }
 
 // MERCADO LOG
     function enableLog(val) {
@@ -265,7 +294,7 @@ var MercadoPagoCustom = (function () {
         }
 
         function setTotalAmount() {
-            TinyJ(self.selectors.totalAmount).val(TinyJ(this).getSelectedOption().attr(self.constants.cost));
+            TinyJ(self.selectors.totalAmount).val(TinyJ(this).getSelectedOption().attribute(self.constants.cost));
         }
 
         function defineInputs() {
@@ -1006,7 +1035,13 @@ var MercadoPagoCustom = (function () {
 
     return {
         getInstance: getInstance,
+        getSelectors: getSelectors,
+        getUrls: getUrls(),
+        getMessages: getMessages,
         setMessages: setMessages,
-        enableLog: enableLog
+        setSelectors: setSelectors,
+        setUrls: setUrls,
+        enableLog: enableLog,
+        isLogEnabled: isLogEnabled
     };
 })();
