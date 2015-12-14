@@ -11,6 +11,7 @@ if (typeof PublicKeyMercadoPagoCustom != "undefined") {
     Mercadopago.setPublishableKey(PublicKeyMercadoPagoCustom);
 }
 
+
 // Inicializa o formulario de pagamento com cartão de credito
 function initMercadoPagoJs() {
     showLogMercadoPago("Init MercadoPago JS");
@@ -46,7 +47,7 @@ function initMercadoPagoJs() {
     //inicia o formulario verificando se ja tem cartão selecionado para obter o bin
     cardsHandler();
 
-    if (TinyJ('#p_method_mercadopago_custom').is(':checked')) {
+    if (TinyJ('#p_method_mercadopago_custom').isChecked()) {
         payment.switchMethod('mercadopago_custom');
     }
 
@@ -94,18 +95,18 @@ function initMercadoPagoOCP() {
     TinyJ('select[data-checkout="cardId"]').change(cardsHandler);
 
     //açoes para one click pay
-    var returnListCar = TinyJ('#return_list_card_mp');
+    var returnListCard = TinyJ('#return_list_card_mp');
     TinyJ('#use_other_card_mp').click(actionUseOneClickPayOrNo);
-    returnListCar.click(actionUseOneClickPayOrNo);
+    returnListCard.click(actionUseOneClickPayOrNo);
 
     TinyJ('#installments').change(setTotalAmount);
 
     //show botão de retornar para lista de cartões
-    returnListCar.show();
+    returnListCard.show();
 }
 
 function setTotalAmount(){
-    TinyJ('.total_amount').val(TinyJ('option:checked', this).attribute('cost'));
+    TinyJ('.total_amount').val(TinyJ(this).getSelectedOption().attribute('cost'));
 }
 
 function defineInputs() {
@@ -161,6 +162,7 @@ function defineInputs() {
     return data_inputs;
 
 }
+
 
 function setRequiredFields(required) {
     if (required) {
@@ -261,7 +263,7 @@ function cardsHandler() {
     // se ele foi selecionado
     // e se o formulário esta ativo, pois o cliente pode estar digitando o cartão
     if (one_click_pay == true) {
-        var selectedCard = TinyJ('#cardId option:checked');
+        var selectedCard = cardSelector.getSelectedOption();
         if(selectedCard.val() != "-1"){
             var _bin = selectedCard.attribute("first_six_digits");
             Mercadopago.getPaymentMethod({"bin": _bin}, setPaymentMethodInfo);
@@ -275,7 +277,7 @@ function getBin() {
     showLogMercadoPago("Get bin");
 
     try{
-        var cardSelector = TinyJ("#cardId option:checked"); 
+        var cardSelector = TinyJ("#cardId").getSelectedOption(); 
     }
     catch(err){
         return;
@@ -286,7 +288,7 @@ function getBin() {
     // se ele foi selecionado
     // e se o formulário esta ativo, pois o cliente pode estar digitando o cartão
 
-    if (one_click_pay && cardSelector.val() != "-1") {
+    if (one_click_pay == true && cardSelector.val() != "-1") {
         return cardSelector.attribute('first_six_digits');
     }
     var ccNumber = TinyJ('input[data-checkout="cardNumber"]').val();
@@ -340,7 +342,7 @@ function setPaymentMethodInfo(status, response) {
 
         //ADICIONA A BANDEIRA DO CARTÃO DENTRO DO INPUT
         var one_click_pay = TinyJ('#mercadopago_checkout_custom #one_click_pay_mp').val();
-        var selector = one_click_pay ? 'select[data-checkout="cardId"]' : 'input[data-checkout="cardNumber"]';
+        var selector = one_click_pay == true ? 'select[data-checkout="cardId"]' : 'input[data-checkout="cardNumber"]';
         TinyJ(selector).getElem().style.background = "url(" + response[0].secure_thumbnail + ") no-repeat";
 
         var bin = getBin();
@@ -457,11 +459,10 @@ function getInstallments(options) {
     if (route != "checkout") {
         showLogMercadoPago("Using checkout customized Magento...");
 
-        AJAX({
+        tiny.ajax(base_url + "mercadopago/api/amount", {
             method: 'GET',
-            url: base_url + "mercadopago/api/amount",
             timeout: 5000,
-            success: function (status, response) {
+            success: function (response, status, xhr) {
                 showLogMercadoPago("Success in get amount: ");
                 showLogMercadoPago(status);
                 showLogMercadoPago(response);
@@ -583,10 +584,16 @@ function releaseEventCreateCardToken() {
 
     var data_checkout = TinyJ("[data-checkout]");
 
-    for (var x = 0; x < data_checkout.length; x++) {
-        data_checkout[x].focusout(checkCreateCardToken);
-        data_checkout[x].change(checkCreateCardToken);
+    if (Array.isArray(data_checkout)){
+        for (var x = 0; x < data_checkout.length; x++) {
+            data_checkout[x].focusout(checkCreateCardToken);
+            data_checkout[x].change(checkCreateCardToken);
+        }
+    }else{
+        data_checkout.focusout(checkCreateCardToken);
+        data_checkout.change(checkCreateCardToken);
     }
+    
 }
 
 //verifica se os inputs estão preenchidos
@@ -608,7 +615,7 @@ function checkCreateCardToken() {
 
     if (submit) {
         var one_click_pay = TinyJ('#mercadopago_checkout_custom #one_click_pay_mp').val();
-        var selector = TinyJ('#mercadopago_checkout_custom #one_click_pay_mp').val() ? '#mercadopago_checkout_custom_ocp' : '#mercadopago_checkout_custom_card';
+        var selector = TinyJ('#mercadopago_checkout_custom #one_click_pay_mp').val() == true ? '#mercadopago_checkout_custom_ocp' : '#mercadopago_checkout_custom_card';
         showLoading();
         Mercadopago.createToken(TinyJ(selector).getElem(), sdkResponseHandler);
     }
@@ -649,9 +656,12 @@ function sdkResponseHandler(status, response) {
     showLogMercadoPago("Hide all errors ...");
     // hide todas as mensagens de errors
     var all_message_errors = TinyJ('.message-error');
-
-    for (var x = 0; x < all_message_errors.length; x++) {
-        all_message_errors[x].hide();
+    if(Array.isArray(all_message_errors)){
+        for (var x = 0; x < all_message_errors.length; x++) {
+            all_message_errors[x].hide();
+        }
+    }else{
+        all_message_errors.hide();
     }
 }
 
@@ -660,12 +670,15 @@ function showMessageErrorForm(el_error) {
     showLogMercadoPago(el_error);
 
     var el_message = TinyJ(el_error);
-
-    for (var x = 0; x < el_message.length; x++) {
-        el_message[x].show();
+    if(Array.isArray(el_message)){
+        for (var x = 0; x < el_message.length; x++) {
+            el_message[x].show();
+        }
+    }else{
+        el_message.show();
     }
-}
 
+}
 
 function showLoading() {
     showLogMercadoPago("Show loading...");
@@ -675,87 +688,6 @@ function showLoading() {
 function hideLoading() {
     showLogMercadoPago("Hide loading...");
     TinyJ("#mercadopago-loading").hide();
-}
-
-/*
- *
- * function para fazer ajax
- *
- */
-
- function AJAX(options) {
-
-    var req = window.XDomainRequest ? (new XDomainRequest()) : (new XMLHttpRequest());
-    var data;
-
-    //inicia a requisição
-    req.open(options.method, options.url, true);
-
-    //caso não tenha timeout definido
-    req.timeout = options.timeout || 1000;
-
-    if (window.XDomainRequest) {
-        req.onload = function () {
-            data = JSON.parse(req.responseText);
-            if (typeof options.success === "function") {
-                options.success(options.method === 'POST' ? 201 : 200, data);
-            }
-        };
-        req.onerror = req.ontimeout = function () {
-            if (typeof options.error === "function") {
-                options.error(400, {
-                    user_agent: window.navigator.userAgent,
-                    error: "bad_request",
-                    cause: []
-                });
-            }
-        };
-        req.onprogress = function () {
-        };
-    } else {
-        req.setRequestHeader('Accept', 'application/json');
-
-        if (options.contentType !== null) {
-            req.setRequestHeader('Content-Type', options.contentType);
-        } else {
-            req.setRequestHeader('Content-Type', 'application/json');
-        }
-
-        req.onreadystatechange = function () {
-            if (this.readyState === 4) {
-                if (this.status >= 200 && this.status < 400) {
-                    // Success!
-                    data = JSON.parse(this.responseText);
-                    if (typeof options.success === "function") {
-                        options.success(this.status, data);
-                    }
-                } else if (this.status >= 400) {
-
-                    //caso o retorno não seja um json
-                    try {
-                        data = JSON.parse(this.responseText);
-                    } catch (e) {
-                        data = this.responseText;
-                    }
-
-                    if (typeof options.error === "function") {
-                        options.error(this.status, data);
-                    }
-                } else if (typeof options.error === "function") {
-                    options.error(503, {});
-                }
-            }
-        }
-    }
-
-
-    //envia o request
-    if (options.method === 'GET' || options.data == null || options.data == undefined) {
-        req.send();
-    } else {
-        data = JSON.stringify(options.data);
-        req.send(data);
-    }
 }
 
 /*
@@ -802,11 +734,11 @@ function validDiscount(form_payment_method) {
     //show loading
     $form_payment.getElem(".mercadopago-message-coupon .loading").show();
 
-    AJAX({
+    tiny.ajax({
         method: 'GET',
         url: base_url + "mercadopago/api/coupon?id=" + coupon_code,
         timeout: 5000,
-        success: function (status, r) {
+        success: function (r, status, xhr) {
             console.log(r);
             showLogMercadoPago("Response validating coupon: ");
             showLogMercadoPago({status: status, response: r});
