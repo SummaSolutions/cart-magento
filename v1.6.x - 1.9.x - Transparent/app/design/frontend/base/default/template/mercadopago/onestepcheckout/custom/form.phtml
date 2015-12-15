@@ -9,11 +9,14 @@ $customer = $this->getCustomerAndCards();
 ?>
 
 <script>
-    document.observe("dom:loaded", function() {
+    Event.observe(document, "dom:loaded", function() {
         initMercadoPagoJs();
     });
-</script>
 
+    if (TinyJ('#use_other_card_mp')){
+        initMercadoPagoJs();
+    }
+</script>
 <link rel="stylesheet" href="<?php echo $this->getSkinUrl('mercadopago/css/style.css'); ?>?nocache=<?php echo rand(); ?>"/>
 
 <fieldset>
@@ -64,9 +67,12 @@ $customer = $this->getCustomerAndCards();
                 </li>
 
                 <script>
-                    document.observe("dom:loaded", function() {
+                    Event.observe(document, "dom:loaded", function() {
                         initMercadoPagoOCP();
                     });
+                    if (TinyJ('#use_other_card_mp')){
+                        initMercadoPagoOCP();
+                    }
                 </script>
             <?php endif; ?>
 
