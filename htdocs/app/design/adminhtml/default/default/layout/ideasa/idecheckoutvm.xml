@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+    <adminhtml_system_config_edit>
+        <reference name="head">
+            <action method="addItem">
+                <type>js</type>
+                <name>ideasa/idecheckoutvm/validation.js</name>
+            </action>
+        </reference>
+    </adminhtml_system_config_edit>
+</layout>

@@ -1,0 +1,37 @@
+<script type="text/javascript">
+//<![CDATA[
+  var quoteBaseGrandTotal = <?php echo (float) $this->getQuoteBaseGrandTotal(); ?>;
+  var checkQuoteBaseGrandTotal = quoteBaseGrandTotal;
+  var payment = new IdePayment('ide-checkout-form', {
+    updatePaymentUrl: '<?php echo $this->getUrl('idecheckoutvm/update/payment', array('_secure' => true)) ?>',
+    updatePaymentAjaxUrl: '<?php echo $this->getUrl('idecheckoutvm/update/paymentAjax', array('_secure' => true)) ?>',
+    updatePaymentMethodUrl: '<?php echo $this->getUrl('idecheckoutvm/update/paymentMethod', array('_secure' => true)) ?>'
+  });
+//]]>
+</script>
+<div id="checkout-step-payment-method" class="idecheckoutvm-block">
+  <?php if (!$this->getQuote()->isVirtual() || Mage::helper('idecheckoutvm/checkout')->isShowCouponLink()) { ?>
+    <div class="step-body">
+      <p class="data-title"><span class="icon"></span><?php echo $this->__('Informe a opção de pagamento'); ?></p>
+    </div>
+  <?php } else { ?>
+    <div class="step-title step-5 virtual">
+      <span><?php echo $this->__('Passo 2'); ?></span>
+      <?php echo $this->__('Payment Method') ?>
+    </div>
+  <?php } ?>
+  <div class="tool-tip" id="payment-tool-tip" style="display:none;">
+    <div class="btn-close"><a href="#" class="cvv-what-is-this" title="<?php echo $this->__('Close') ?>"><?php echo $this->__('Close') ?></a></div>
+    <div class="tool-tip-content"><img src="<?php echo $this->getSkinUrl('images/cvv.gif') ?>" alt="<?php echo $this->__('Card Verification Number Visual Reference') ?>" title="<?php echo $this->__('Card Verification Number Visual Reference') ?>" /></div>
+  </div>
+  <div id="checkout-payment-method-load">
+    <?php echo $this->getChildHtml('methods') ?>
+  </div>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+  payment.currentMethod = "<?php echo $this->getChild('methods')->getSelectedMethodCode() ?>";
+  payment.initWhatIsCvvListeners();
+//]]>
+</script>

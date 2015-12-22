@@ -1,0 +1,110 @@
+<?php
+$logged = $this->isCustomerLoggedIn();
+$hasAddress = $this->customerHasAddresses();
+$sameAddress = $this->getShippingAddress()->getSameAsBilling();
+
+$this->setFieldIdFormat('shipping:%s');
+$this->setFieldNameFormat('shipping[%s]');
+$this->loadDependencies();
+
+if (!$this->getQuote()->isVirtual()) {
+  ?>
+
+  <div id="header-shipping">
+    <p class="data-title"><span class="icon"></span><?php echo $this->__('Informe o endereço de entrega'); ?></p>
+  </div>      
+  <ul class="same-as-billing">
+    <li class="control">
+      <input type="checkbox" class="checkbox" name="shipping[same_as_billing]" id="shipping:same_as_billing" value="1" title="<?php echo $this->__('Use Billing Address') ?>" onclick="shipping.setSameAsBilling(this.checked)" <?php
+      if ($sameAddress) {
+        echo ' checked="checked"';
+      }
+      ?>/>
+      <label for="shipping:same_as_billing"><?php echo $this->__('Ship to the same address') ?></label>
+    </li>
+  </ul>
+
+  <div id="checkout-step-shipping" <?php
+  if ($sameAddress) {
+    echo 'style="display: none;"';
+  }
+  ?>>
+    <div class="form-list">
+      <?php if ($hasAddress) { ?>
+        <div class="fields address-select">
+          <label for="shipping-address-select"><?php echo $this->__('Select a shipping address from your address book or enter a new address.') ?></label>
+          <div class="input-box"><?php echo $this->getAddressesHtmlSelect('shipping') ?></div>
+        </div>
+      <?php } ?>
+
+      <div id="shipping-new-address-form" <?php
+      if ($hasAddress) {
+        echo ' style="display:none;" ';
+      }
+      ?>>
+             <?php $this->printOrderingFields(); ?>
+        <ul class="save-in-address-book">
+          <?php if ($logged && $hasAddress) { ?>
+            <li class="control">
+              <input type="checkbox" class="checkbox" name="shipping[save_in_address_book]" value="1" title="<?php echo $this->__('Save in address book') ?>" id="shipping:save_in_address_book" onchange="shipping.setSameAsBilling(false);" <?php
+              if ($this->getShippingAddress()->getSaveInAddressBook()) {
+                echo ' checked="checked" ';
+              }
+              ?> />
+              <label for="shipping:save_in_address_book"><?php echo $this->__('Save in address book'); ?></label>
+            </li>
+          <?php } else { ?>
+            <li class="no-display">
+              <input type="hidden" value="1" name="shipping[save_in_address_book]" />
+            </li>
+          <?php } ?>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    //<![CDATA[
+    var shipping = new IdeShipping();
+    var shippingRegionUpdater = new RegionUpdater('shipping:country_id', 'shipping:region', 'shipping:region_id', countryRegions, undefined, 'shipping:postcode');
+
+  <?php if ($hasAddress) { ?>
+      $('shipping-address-select').observe('change', function() {
+        billing.update()
+      });
+  <?php } ?>
+
+    Event.observe(window, 'load', function() {
+  <?php if (Mage::helper('idecheckoutvm')->isAutocompleteCepEnable()) { ?>
+        var ideShippingCepAddonInst = new IdeCepAddon('shipping', '<?php echo $this->getUrl('ideaddons/cep/index', array('_secure' => true)) ?>');
+        $('shipping:postcode').observe('click', function() {
+          ideShippingCepAddonInst.reset()
+        });
+        $('shipping:postcode').observe('blur', function() {
+          ideShippingCepAddonInst.get()
+        });
+        $('shipping:postcode').observe('keyup', function() {
+          ideShippingCepAddonInst.validate()
+        });
+  <?php } ?>
+      if ($('shipping:mobile')) {
+        $('shipping:mobile').observe('blur', function() {
+          ideMaskInst.telephone('#checkout-step-shipping .fields.mobile .input-box input', this);
+        }).triggerEvent('blur');
+      }
+      if ($('shipping:telephone')) {
+        $('shipping:telephone').observe('blur', function() {
+          ideMaskInst.telephone('#checkout-step-shipping .fields.telephone .input-box input', this);
+        }).triggerEvent('blur');
+      }
+
+      if ($('shipping:fax')) {
+        $('shipping:fax').observe('blur', function() {
+          ideMaskInst.telephone('#checkout-step-shipping .fields.fax .input-box input', this);
+        }).triggerEvent('blur');
+      }
+    });
+    //]]>
+  </script>
+  <?php
+}
+?>

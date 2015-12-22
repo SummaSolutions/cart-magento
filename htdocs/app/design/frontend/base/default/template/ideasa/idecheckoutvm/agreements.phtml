@@ -1,0 +1,66 @@
+<?php if (!$this->isAgreementsEnable() || !$agreements = $this->getAgreements()) {
+    return;
+}
+?>
+
+<ol class="checkout-agreements-load">
+<?php $_i = 0; foreach ($agreements as $agree): ?>
+    <li<?php echo ++$_i === count($agreements) ? ' class="last"' : ''?>>
+        <?php if ($this->showInScreen()) { ?>
+            <div id="idecheckoutvm-agreement-<?php echo $agree->getId() ?>-window" class="agreement-content"
+                style="<?php echo ($agree->getContentHeight() ? 'height:' . $agree->getContentHeight() : '') ?>">
+                <div class="page-title">
+                    <span><?php echo $this->htmlEscape($agree->getName()) ?></span>
+                </div>
+                <div class="content">
+                <?php if ($agree->getIsHtml()) {
+                    echo $agree->getContent();
+                } else {
+                    echo nl2br($this->htmlEscape($agree->getContent()));
+                }?>
+                </div>
+            </div>
+            <p class="agree">
+                <input type="checkbox" id="agreement-<?php echo $agree->getId()?>" name="agreement[<?php echo $agree->getId()?>]" value="1" title="<?php echo $this->htmlEscape($agree->getCheckboxText()) ?>" class="checkbox" />
+                <label for="agreement-<?php echo $agree->getId()?>">
+                    <?php echo $this->htmlEscape($agree->getCheckboxText()) ?>
+                </label>
+            </p>
+        <?php
+        } else { ?>
+            <div id="idecheckoutvm-agreement-<?php echo $agree->getId() ?>-window" class="agreement-content" style="display: none;">
+                <h2><?php echo $this->htmlEscape($agree->getName()) ?></h2>
+                <div class="content">
+                <?php if ($agree->getIsHtml()) {
+                        echo $agree->getContent();
+                    } else {
+                        echo nl2br($this->htmlEscape($agree->getContent()));
+                } ?>
+                    <p class="idecheckoutvm-link">
+                        <a href="#" id="idecheckoutvm-agreement-<?php echo $agree->getId() ?>-window-close"><?php echo $this->__('Fechar') ?></a>
+                    </p>
+                </div>
+            </div>
+            <p class="agree">
+                <input type="checkbox" id="agreement-<?php echo $agree->getId()?>" name="agreement[<?php echo $agree->getId()?>]" value="1" title="<?php echo $this->htmlEscape($agree->getCheckboxText()) ?>" class="checkbox" />
+                <label for="agreement-<?php echo $agree->getId()?>">
+                    <a href="#idecheckoutvm-agreement-<?php echo $agree->getId() ?>-window" id="idecheckoutvm-agreement-<?php echo $agree->getId() ?>" code="<?php echo $agree->getId() ?>">
+                        <?php echo $agree->getCheckboxText() ?>
+                    </a>
+                </label>
+            </p>
+        <?php } ?>
+    </li>
+<?php endforeach ?>
+</ol>
+
+<script type="text/javascript">
+//<![CDATA[
+$$('.checkout-agreements-load .agree a').each(function(elem) {
+    var code = elem.readAttribute('code');
+    var t = eval("var checkoutVmAgreementInst" + code);
+    t = new CheckoutVmAgreement(elem.id);
+    $('idecheckoutvm-agreement-' + code + '-window-close').observe('click', function() {t.doClose()});
+});
+//]]>
+</script>

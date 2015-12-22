@@ -1,0 +1,7 @@
+<?php if(!Mage::helper('idecheckoutvm/checkout')->isShowLoginLink()) {return;} ?>
+
+<p class="idecheckoutvm-login-area">
+    <a id="idecheckoutvm-link-login" href="#idecheckoutvm-login-box">
+        <?php echo $this->__('Already registered? Click here to login') ?>
+    </a>
+</p>

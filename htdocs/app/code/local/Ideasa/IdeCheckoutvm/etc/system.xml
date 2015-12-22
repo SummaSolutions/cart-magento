@@ -1,0 +1,686 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <ideasa translate="label" module="idecheckoutvm">
+            <label>Checkout Venda Mais</label>
+            <sort_order>1000</sort_order>a
+        </ideasa>
+    </tabs>
+    
+    <sections>
+        <idecheckoutvm translate="label" module="idecheckoutvm">
+            <label><![CDATA[Configurações]]></label>
+            <frontend_type>text</frontend_type>
+            <sort_order>1</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <tab>ideasa</tab>
+            <groups>
+                <geral translate="label" module="idecheckoutvm">
+                    <label>General (1.7.0)</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <active translate="label" module="idecheckoutvm">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label" module="idecheckoutvm">
+                            <label>Page Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <shipping_method translate="label" module="idecheckoutvm">
+                            <label>Default Shipping Method</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_shipping_allmethods</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shipping_method>
+                        <payment_method translate="label" module="idecheckoutvm">
+                            <label>Default Payment Method</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_payment_allmethods</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </payment_method>
+                        <country translate="label" module="idecheckoutvm">
+                            <label>Default Country</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </country>
+                        <login_link translate="label" module="idecheckoutvm">
+                            <label>Mostrar link de login</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </login_link>
+                        <coupon translate="label" module="idecheckoutvm">
+                            <label>Mostrar cupom de desconto</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </coupon>
+                        <newsletter_link translate="label" module="idecheckoutvm">
+                            <label>Mostrar link assinar Newsletter</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </newsletter_link>
+                        <top_links translate="label" module="idecheckoutvm">
+                            <label>Remover bloco "Top Links" do Header</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Somente se o bloco estiver na Seção "header"]]></tooltip>
+                        </top_links>
+                        <top_language translate="label" module="idecheckoutvm">
+                            <label>Remover bloco "Top Language" do Header</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Somente se o bloco estiver na Seção "header"]]></tooltip>
+                        </top_language>
+                        <top_menu translate="label" module="idecheckoutvm">
+                            <label>Remover bloco "Top Menu" do Header</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Somente se o bloco estiver na Seção "header"]]></tooltip>
+                        </top_menu>
+                        <top_container translate="label" module="idecheckoutvm">
+                            <label>Remover bloco "Top Container" do Header"</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Somente se o bloco estiver na Seção "header"]]></tooltip>
+                        </top_container>
+                        <show_ssl translate="label" module="idecheckoutvm">
+                            <label>Mostrar Selo de Segurança</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>13</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </show_ssl>
+                        <show_google_safe translate="label" module="idecheckoutvm">
+                            <label>Mostrar Selo do Google Safe Browsing</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>14</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </show_google_safe>
+                        <custom_css translate="label" module="idecheckoutvm">
+                            <label>Habilitar arquivo "custom.css"</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>
+                                <![CDATA[O arquivo custom.css preserva as modificações de layout que você têm no Checkout Venda Mais. <br />
+                                Este deverá ser criado por você e inserido na pasta "/skin/frontend/base/default/idecheckoutvm/css/"]]>
+                            </comment>
+                        </custom_css>
+                    </fields>
+                </geral>
+                <fields translate="label comment">
+                    <label>Another Form Fields</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <tipo_pessoa translate="label" module="idecheckoutvm">
+                            <label>Tipo de Pessoa</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Apresenta ao cliente a opção de Pessoa Física/Jurídica]]></tooltip>
+                        </tipo_pessoa>
+                        <rg translate="label" module="idecheckoutvm">
+                            <label>R.G.</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_nooptreq</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </rg>
+                        <insc_est translate="label" module="idecheckoutvm">
+                            <label><![CDATA[Inscrição Estadual]]></label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_nooptreq</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Será mostrado no checkout somente se "Tipo de Pessoa" estiver habilitado.]]></tooltip>
+                        </insc_est>
+                        <razao_social translate="label" module="idecheckoutvm">
+                            <label><![CDATA[Razão Social]]></label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_nooptreq</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Será mostrado no checkout somente se "Tipo de Pessoa" estiver habilitado.]]></tooltip>
+                        </razao_social>
+                        <nome_fantasia translate="label" module="idecheckoutvm">
+                            <label><![CDATA[Nome Fantasia]]></label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_nooptreq</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Será mostrado no checkout somente se "Tipo de Pessoa" estiver habilitado.]]></tooltip>
+                        </nome_fantasia>
+                        <address_1 translate="label" module="idecheckoutvm">
+                            <label>Street Address</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>idecheckoutvm/system_config_source_required</source_model>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Configuração "Sistema > Configuração > Clientes > Configurações > Opções de Nome e Endereço > Número de linhas para endereço" deverá estar entre 2 e 4.]]></tooltip>
+                        </address_1>
+                        <address_2 translate="label" module="idecheckoutvm">
+                            <label>Street Address_2</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>idecheckoutvm/system_config_source_required</source_model>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Configuração "Sistema > Configuração > Clientes > Configurações > Opções de Nome e Endereço > Número de linhas para endereço" deverá estar entre 2 e 4.]]></tooltip>
+                        </address_2>
+                        <address_3 translate="label" module="idecheckoutvm">
+                            <label>Street Address_3</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_nooptreq</source_model>
+                            <sort_order>8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Configuração "Sistema > Configuração > Clientes > Configurações > Opções de Nome e Endereço > Número de linhas para endereço" deverá estar entre 3 e 4.]]></tooltip>
+                        </address_3>
+                        <address_4 translate="label" module="idecheckoutvm">
+                            <label>Street Address_4</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>idecheckoutvm/system_config_source_nooptreq</source_model>
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA[Configuração "Sistema > Configuração > Clientes > Configurações > Opções de Nome e Endereço > Número de linhas para endereço" deverá ser 4.]]></tooltip>
+                        </address_4>
+                        <city translate="label" module="idecheckoutvm">
+                            <label>City</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>idecheckoutvm/system_config_source_required</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </city>
+                        <country translate="label" module="idecheckoutvm">
+                            <label>Country</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_nooptreq</source_model>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </country>
+                        <zip translate="label" module="idecheckoutvm">
+                            <label>Zip/Postal Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>idecheckoutvm/system_config_source_required</source_model>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </zip>
+                        <state translate="label" module="idecheckoutvm">
+                            <label>State/Province</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>idecheckoutvm/system_config_source_nooptreq</source_model>
+                            <sort_order>13</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </state>
+                        <mobile translate="label" module="idecheckoutvm">
+                            <label>Celular</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_nooptreq</source_model>
+                            <sort_order>14</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </mobile>
+                        <phone translate="label" module="idecheckoutvm">
+                            <label>Telephone</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>idecheckoutvm/system_config_source_required</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </phone>
+                        <fax translate="label" module="idecheckoutvm">
+                            <label>Fax</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_nooptreq</source_model>
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </fax>
+                        <company translate="label" module="idecheckoutvm">
+                            <label>Company</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_nooptreq</source_model>
+                            <sort_order>17</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </company>
+                    </fields>
+                </fields>
+                <ordering_fields translate="label" module="idecheckoutvm">
+                    <label>Another Sortordering Form Fields</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <email translate="label" module="idecheckoutvm">
+                            <label>Email Address</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email>
+                        <prefix translate="label" module="idecheckoutvm">
+                            <label>Prefix</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </prefix>
+                        <firstname translate="label" module="idecheckoutvm">
+                            <label>First Name</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </firstname>
+                        <middlename translate="label" module="idecheckoutvm">
+                            <label>M.I.</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </middlename>
+                        <lastname translate="label" module="idecheckoutvm">
+                            <label>Last Name</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </lastname>
+                        <suffix translate="label" module="idecheckoutvm">
+                            <label>Suffix</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </suffix>
+                        
+                        <tipo_pessoa translate="label" module="idecheckoutvm">
+                            <label>Tipo de Pessoa</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tipo_pessoa>
+                        
+                        <rg translate="label" module="idecheckoutvm">
+                            <label>R.G.</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </rg>
+                        
+                        <taxvat translate="label" module="idecheckoutvm">
+                            <label>Tax/VAT number</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </taxvat>
+                        
+                        <dob translate="label" module="idecheckoutvm">
+                            <label>Date of Birth</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </dob>
+                        
+                        <gender translate="label" module="idecheckoutvm">
+                            <label>Gender</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </gender>
+                        
+                        <insc_est translate="label" module="idecheckoutvm">
+                            <label><![CDATA[Inscrição Estadual]]></label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </insc_est>
+                        
+                        <razao_social translate="label" module="idecheckoutvm">
+                            <label><![CDATA[Razão Social]]></label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>13</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </razao_social>
+                        
+                        <nome_fantasia translate="label" module="idecheckoutvm">
+                            <label><![CDATA[Nome Fantasia]]></label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>14</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </nome_fantasia>
+                        
+                        <mobile translate="label" module="idecheckoutvm">
+                            <label>Celular</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </mobile>
+                        
+                        <telephone translate="label" module="idecheckoutvm">
+                            <label>Telephone</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </telephone>
+                        <fax translate="label" module="idecheckoutvm">
+                            <label>Fax</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>17</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </fax>
+                        
+                        <postcode translate="label" module="idecheckoutvm">
+                            <label>ZIP</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>18</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </postcode>
+                        <street1 translate="label" module="idecheckoutvm">
+                            <label>Street Address</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>19</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </street1>
+                        <street2 translate="label" module="idecheckoutvm">
+                            <label>Street Address_2</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </street2>
+                        <street3 translate="label" module="idecheckoutvm">
+                            <label>Street Address_3</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </street3>
+                        <street4 translate="label" module="idecheckoutvm">
+                            <label>Street Address_4</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>22</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </street4>
+                        <city translate="label" module="idecheckoutvm">
+                            <label>City</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>23</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </city>
+                        <country translate="label" module="idecheckoutvm">
+                            <label>Country</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>24</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </country>
+                        <region translate="label" module="idecheckoutvm">
+                            <label>State/Province</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </region>
+                        <company translate="label" module="idecheckoutvm">
+                            <label>Company</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>26</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </company>
+                    </fields>
+                </ordering_fields>
+                
+                <agreements translate="label" module="idecheckoutvm">
+                    <label>Terms and Conditions</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>60</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <enabled translate="label" module="idecheckoutvm">
+                            <label>Enable Terms and Conditions</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <output translate="label" module="idecheckoutvm">
+                            <label>Output Type</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>idecheckoutvm/system_config_source_agreementOptions</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </output>
+                    </fields>
+                </agreements>
+                <registration translate="label" module="idecheckoutvm">
+                    <label><![CDATA[Conta de Cliente]]>
+                    </label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>70</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <mode translate="label" module="idecheckoutvm">
+                            <label><![CDATA[Modo de Registro]]>
+                            </label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>idecheckoutvm/system_config_source_registration</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </mode>
+                    </fields>
+                </registration>
+                <minimum_itens translate="label" module="idecheckoutvm">
+                    <label><![CDATA[Mínimo de Itens do pedido]]></label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>80</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <itens translate="label" module="idecheckoutvm">
+                            <label>Quantidade de itens</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry validate-number</validate>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA["0" ignora a validação.]]></tooltip>
+                        </itens>
+                        <message translate="label" module="idecheckoutvm">
+                            <label>Mensagem exibida</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip><![CDATA["%d" para quantidade de itens.]]></tooltip>
+                        </message>
+                    </fields>
+                </minimum_itens>
+            </groups>
+        </idecheckoutvm>
+    </sections>
+</config>

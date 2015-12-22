@@ -1,0 +1,19 @@
+<?php if(!Mage::helper('idecheckoutvm/checkout')->isShowCouponLink()) {return;} ?>
+
+<div id="checkout-step-coupon" class="idecheckoutvm-block">
+    <?php if (!$this->getQuote()->isVirtual()) { ?>
+        <div class="step-title step-4"><?php echo $this->__('Discount Codes') ?></div>
+    <?php } else { ?>
+        <div class="step-title step-4 virtual">
+            <span><?php echo $this->__('Passo 2');?></span>
+            <?php echo $this->__('Cupom e Pagamento') ?>
+        </div>
+    <?php } ?>
+    <div id="checkout-coupon-load">
+        <p class="idecheckoutvm-coupon-area">
+            <a id="idecheckoutvm-link-coupon" href="#idecheckoutvm-coupon-box">
+                <?php echo $this->__('Tem um cupom de desconto?') ?>
+            </a>
+        </p>
+    </div>
+</div>

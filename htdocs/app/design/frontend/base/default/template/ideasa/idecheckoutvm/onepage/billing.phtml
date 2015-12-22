@@ -1,0 +1,161 @@
+<?php
+$logged = $this->isCustomerLoggedIn();
+$hasAddress = $this->customerHasAddresses();
+$this->setFieldIdFormat('billing:%s');
+$this->setFieldNameFormat('billing[%s]');
+$this->loadDependencies();
+?>
+
+<div id="checkout-step-billing">
+  <div class="step-title step-1">
+    <span><?php echo $this->__('Passo 1'); ?></span>
+    <?php echo $this->__('Informações Pessoais'); ?>
+  </div>
+
+  <div class="step-body">
+    <p class="data-title"><span class="icon"></span><?php echo $this->__('Informe o endereço de cobrança'); ?></p>
+    <?php echo $this->getChildHtml('customer.login.link') ?>
+
+    <div class="form-list">
+      <?php if ($hasAddress) { ?>
+        <div class="fields address-select">
+          <label for="billing-address-select"><?php echo $this->__('Select a billing address from your address book or enter a new address.') ?></label>
+          <div class="input-box"><?php echo $this->getAddressesHtmlSelect('billing') ?></div>
+        </div>
+      <?php } ?>
+
+      <div id="billing-new-address-form" <?php
+      if ($hasAddress) {
+        echo ' style="display:none;" ';
+      }
+      ?>>
+        <input type="hidden" name="billing[address_id]" value="<?php echo $this->getAddress()->getId() ?>" id="billing:address_id" />
+        <?php
+        $this->printOrderingFields();
+
+        if (!$logged) {
+          echo $this->getChildHtml('account');
+        }
+        ?>
+        <ul class="save-in-address-book">
+          <?php if ($logged && $hasAddress) { ?>
+            <li class="control">
+              <input type="checkbox" class="checkbox" name="billing[save_in_address_book]" value="1" title="<?php echo $this->__('Save in address book') ?>" id="billing:save_in_address_book" onchange="if (window.shipping) {
+                    billing.saveInAddressBook(false);
+                  }" <?php
+                     if ($this->getBillingAddress()->getSaveInAddressBook()) {
+                       echo ' checked="checked" ';
+                     }
+                     ?> />
+              <label for="billing:save_in_address_book"><?php echo $this->__('Save in address book'); ?></label>
+            </li>
+          <?php } else { ?>
+            <li class="no-display">
+              <input type="hidden" value="1" name="billing[save_in_address_book]" />
+            </li>
+          <?php } ?>
+        </ul>
+      </div>
+
+      <?php if ($this->canShip()) { ?>
+        <input type="hidden" name="billing[use_for_shipping]" id="billing:use_for_shipping" value="<?php echo ($this->isUseBillingAddressForShipping()) ? '1' : '0'; ?>" />
+      <?php } else { ?>
+        <input type="hidden" name="billing[use_for_shipping]" value="1" />
+      <?php } ?>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+  var billing = new IdeBilling({addressUrl: '<?php echo $this->getUrl('idecheckoutvm/index/getAddress', array('_secure' => true)) ?>',
+    checkEmailUrl: '<?php echo $this->getUrl('idecheckoutvm/login/checkEmail', array('_secure' => true)) ?>'});
+  RegionUpdater.prototype.setMarkDisplay = function() {
+  };
+  ZipUpdater.prototype._setPostcodeOptional = function() {
+  };
+  var billingRegionUpdater = new RegionUpdater('billing:country_id', 'billing:region', 'billing:region_id', countryRegions, undefined, 'billing:postcode');
+
+  if (typeof CheckoutVmPessoa == 'function') {
+    var checkoutVmPessoaInst = new CheckoutVmPessoa('ide-checkout-form', {cpf: '<?php echo $this->__('CPF number') ?>',
+      cnpj: '<?php echo $this->__('CNPJ number') ?>'});
+  }
+
+  Event.observe(window, 'load', function() {
+<?php if (Mage::helper('idecheckoutvm')->isAutocompleteCepEnable()) { ?>
+      var ideBillingCepAddonInst = new IdeCepAddon('billing', '<?php echo $this->getUrl('ideaddons/cep/index', array('_secure' => true)) ?>');
+      ideBillingCepAddonInst.addAfterClearGetMethod('clear', function() {
+        billing.update();
+      });
+      ideBillingCepAddonInst.addAfterCallGetMethod('get', function() {
+        billing.update();
+      });
+      $('billing:postcode').observe('click', function() {
+        ideBillingCepAddonInst.reset()
+      });
+      $('billing:postcode').observe('blur', function() {
+        ideBillingCepAddonInst.get()
+      });
+      $('billing:postcode').observe('keyup', function() {
+        ideBillingCepAddonInst.validate()
+      });
+<?php } ?>
+
+<?php if ($hasAddress) { ?>
+      $('billing-address-select').observe('change', function() {
+        billing.update()
+      });
+<?php } ?>
+
+    $('billing:street1').observe('change', function() {
+      billing.update()
+    });
+    $('billing:street2').observe('change', function() {
+      billing.update()
+    });
+    if ($('billing:street3')) {
+      $('billing:street3').observe('change', function() {
+        billing.update()
+      });
+    }
+    if ($('billing:street4')) {
+      $('billing:street4').observe('change', function() {
+        billing.update()
+      });
+    }
+    if (typeof CheckoutVmPessoa == 'function') {
+      if ($('billing:tipo_pessoaJ')) {
+        $('billing:tipo_pessoaJ').observe('click', function() {
+          checkoutVmPessoaInst.showPj()
+        });
+        $('billing:tipo_pessoaJ').click();
+      }
+      if ($('billing:tipo_pessoaF')) {
+        $('billing:tipo_pessoaF').observe('click', function() {
+          checkoutVmPessoaInst.showPf();
+        });
+        $('billing:tipo_pessoaF').click();
+      }
+      if (!$('billing:tipo_pessoaF') && !$('billing:tipo_pessoaJ')) {
+        checkoutVmPessoaInst.showPf();
+      }
+    }
+    if ($('billing:mobile')) {
+      $('billing:mobile').observe('blur', function() {
+        ideMaskInst.telephone('#checkout-step-billing .fields.mobile .input-box input', this);
+      }).triggerEvent('blur');
+    }
+
+    if ($('billing:telephone')) {
+      $('billing:telephone').observe('blur', function() {
+        ideMaskInst.telephone('#checkout-step-billing .fields.telephone .input-box input', this);
+      }).triggerEvent('blur');
+    }
+    if ($('billing:fax')) {
+      $('billing:fax').observe('blur', function() {
+        ideMaskInst.telephone('#checkout-step-billing .fields.fax .input-box input', this);
+      }).triggerEvent('blur');
+    }
+  });
+//]]>
+</script>

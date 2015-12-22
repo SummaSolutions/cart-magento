@@ -1,0 +1,40 @@
+<div class="fields dob">
+  <label <?php if ($this->isRequired()) echo 'class="required"' ?> for="<?php echo $this->getFieldId('month')?>"><?php if ($this->isRequired()) echo '<em>*</em>'; echo $this->__('Date of Birth'); ?></label>
+
+    <div class="customer-dob">
+    <?php
+        $this->setDateInput('d',
+            '<div class="input-box dob-day"> 
+              <input type="text" id="' . $this->getFieldId('day') . '" name="' . $this->getFieldName('day') . '" value="' . $this->getDay() . '" title="' . $this->__('Day') . '" class="input-text validate-custom" ' . $this->getFieldParams() . ' placeholder="' . $this->__('DD') . '" />
+             </div>'
+        );
+
+        $this->setDateInput('m',
+            '<div class="input-box dob-month">
+              <input type="text" id="' . $this->getFieldId('month') . '" name="' . $this->getFieldName('month') . '" value="' . $this->getMonth()  . '" title="' . $this->__('Month')  . '" class="input-text validate-custom" ' . $this->getFieldParams()  . ' placeholder="' . $this->__('MM') . '" />
+             </div>'
+        );
+
+        $this->setDateInput('y',
+            '<div class="input-box dob-year">
+               <input type="text" id="' . $this->getFieldId('year') . '" name="' . $this->getFieldName('year') . '" value="' . $this->getYear()  . '" title="' . $this->__('Year')  . '" class="input-text validate-custom" ' . $this->getFieldParams()  . ' placeholder="' . $this->__('YYYY') . '" />
+             </div>'
+        );
+    echo $this->getSortedDateInputs();
+    ?>
+    <div class="dob-full" style="display:none;">
+        <input type="hidden" id="<?php echo $this->getFieldId('dob')?>" name="<?php echo $this->getFieldName('dob')?>" />
+    </div>
+    <div class="validation-advice" style="display:none;"></div>
+  </div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    var customer_dob = new Varien.DOB('.customer-dob', <?php echo $this->isRequired() ? 'true' : 'false' ?>, '<?php echo $this->getDateFormat() ?>');
+    var ideDobInst = new IdeDob("<?php echo $this->getFieldId('day')?>", 
+                                "<?php echo $this->getFieldId('month')?>", 
+                                "<?php echo $this->getFieldId('year')?>", 
+                                "<?php echo $this->getFieldId('dob')?>", 
+                                "<?php echo $this->getDateFormat()?>");
+//]]>
+</script>

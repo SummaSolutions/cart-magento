@@ -1,0 +1,10 @@
+<?php if($this->isSubscribeNewAllowed()) { ?>
+    <div id="checkout-news-load">
+        <p class="newsletter">
+            <input type="checkbox" id="newsletter-signup" name="newsletter" value="1" title="<?php echo Mage::helper('newsletter')->__('Sign up for our newsletter') ?>" class="checkbox" />
+            <label for="newsletter-signup">
+                <?php echo Mage::helper('newsletter')->__('Sign up for our newsletter') ?>
+            </label>
+        </p>
+    </div>
+<?php } ?>

@@ -1,0 +1,35 @@
+<?php
+$agc = $this->isAllowGuest();
+if ($agc) { ?>
+<ul class="register">
+    <li class="control">
+        <input type="checkbox" name="billing[register_account]" value="1" title="<?php echo $this->__('Create an account for later use') ?>" id="billing:register_account" onclick="if(window.billing) billing.setRegister(this.checked);"<?php if ($this->getRegisterAccount()):?> checked="checked"<?php endif;?> class="checkbox" />
+        <label for="billing:register_account"><?php echo $this->__('Create an account for later use') ?></label>
+    </li>
+</ul>
+<?php
+}
+if($this->isRequiredRegistration()) { ?>
+    <input type="hidden" name="billing[register_account]" value="1" />
+<?php }
+
+if($this->isShowLoginInputs()) { ?>
+    <div id="register-customer">
+        <?php $this->printPassword(); ?>
+    </div>
+<?php } ?>
+
+<script type="text/javascript">
+    //<![CDATA[
+    <?php if ($agc) { ?>
+        $('register-customer').hide();
+    <?php } ?>
+
+    Event.observe(window, 'load', function() {
+        <?php if($this->isToValidateEmail()) { ?>
+            $('billing:email').addClassName('validate-email');
+            $('billing:email').observe('blur', function() {billing.checkEmail()});
+        <?php }?>
+    });
+    //]]>
+</script>

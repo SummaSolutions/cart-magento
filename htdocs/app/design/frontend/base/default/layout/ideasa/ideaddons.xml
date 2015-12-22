@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <idecheckoutvm_index_index translate="label">
+        <reference name="head">
+            <action method="addItem" ifconfig="ideaddons/cep/autocomplete">
+                <type>js</type>
+                <name>ideasa/ideaddons/cep.js?1.2.0</name>
+            </action>
+        </reference>
+    </idecheckoutvm_index_index>
+</layout>

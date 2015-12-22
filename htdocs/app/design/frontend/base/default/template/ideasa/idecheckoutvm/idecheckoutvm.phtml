@@ -1,0 +1,55 @@
+<script type="text/javascript">
+//<![CDATA[
+    var checkout = new IdeCheckoutvm('ide-checkout-form', {
+    	saveUrl            : '<?php echo $this->getUrl('idecheckoutvm/index/saveOrder', array('_secure' => true)) ?>',
+    	billingUrl         : '<?php echo $this->getUrl('idecheckoutvm/update/billing', array('_secure' => true)) ?>',
+        successUrl         : '<?php echo $this->getUrl('idecheckoutvm/index/success', array('_secure' => true)) ?>',
+        failureUrl         : '<?php echo $this->getUrl('checkout/cart', array('_secure' => true)) ?>',
+        ajaxLoaderUrl      : '<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>',
+        submitOrderText    : "<?php echo $this->__('Submitting order information...') ?>",
+        conditionTermsText : "<?php echo $this->__('Please agree to all the terms and conditions.') ?>"
+    });
+//]]>
+</script>
+
+<?php
+if($this->hasTitle()) { ?>
+    <div class="page-title"><h1><?php echo $this->getTitle(); ?></h1></div>
+<?php
+}
+echo $this->getMessagesBlock()->getGroupedHtml();
+?>
+
+<script type="text/javascript">countryRegions = <?php echo $this->helper('directory')->getRegionJson() ?></script>
+
+<div id="idecheckoutvm-checkout-message"></div>
+
+<form action="" id="ide-checkout-form">
+    <div class="col3-set idecheckoutvm-datafields">
+        <div class="col-1">
+            <?php echo $this->getChildHtml('billing.address') ?>
+            <?php echo $this->getChildHtml('shipping.address') ?>
+        </div>
+        <div class="col-2">
+            <?php echo $this->getChildHtml('shipping.method') ?>
+            <?php echo $this->getChildHtml('checkout.coupon.link') ?>
+            <?php echo $this->getChildHtml('payment.method') ?>
+        </div>
+        <div class="col-3">
+            <?php echo $this->getChildHtml('review') ?>
+            <?php echo $this->getChildHtml('onepage.ssl') ?>
+        </div>
+    </div>
+</form>
+
+<?php echo $this->getChildHtml('customer.login.form') ?>
+<?php echo $this->getChildHtml('checkout.coupon.form');?>
+<?php echo $this->getChildHtml('loading.loader') ?>
+
+<script type="text/javascript">
+//<![CDATA[
+    Event.observe(window, 'load', function() {
+        billing.update();
+    });
+//]]>
+</script>

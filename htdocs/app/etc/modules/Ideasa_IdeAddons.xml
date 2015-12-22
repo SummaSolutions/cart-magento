@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <modules>
+        <Ideasa_IdeAddons>
+            <active>true</active>
+            <codePool>local</codePool>
+            <version>1.2.0</version>
+        </Ideasa_IdeAddons>
+    </modules>
+</config>

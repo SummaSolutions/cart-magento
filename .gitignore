@@ -10,6 +10,6 @@ nbproject
 
 .travis/build.properties.local
 
-/htdocs
+/htdocs/var
 /dev
 /tmp

@@ -1,0 +1,16 @@
+<?php if (!$this->isShowSslImage()) {
+  return;
+} ?>
+
+<ul class="ssl-block">
+<?php if ($this->isShowGoogleSafe()): ?>
+    <li>
+      <a href="http://www.google.com/safebrowsing/diagnostic?site=<?php echo Mage::getBaseUrl();?>" title="<?php echo $this->__('Site Seguro'); ?>" target="_blank">
+        <img src="<?php echo $this->getSkinUrl('idecheckoutvm/images/google_safe_browsing.png') ?>" title="<?php echo $this->__('Auditado pelo Google Safe Browsing'); ?>" alt="<?php echo $this->__('Auditado pelo Google Safe Browsing'); ?>"></a>
+    </li>
+  <?php endif ?>
+
+  <?php if ($this->isShowSsl()): ?>
+    <li><img src="<?php echo $this->getSkinUrl('idecheckoutvm/images/ssl.png') ?>" title="<?php echo $this->__('Você está em ambiente seguro'); ?>" alt="<?php echo $this->__('Você está em ambiente seguro'); ?>"></li>
+<?php endif ?>
+</ul>
