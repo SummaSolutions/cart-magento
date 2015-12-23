@@ -252,7 +252,6 @@ var MercadoPagoCustom = (function () {
 
             TinyJ(self.selectors.installments).getElem().stopObserving();
             TinyJ(self.selectors.installments).change(setTotalAmount);
-            registerAjaxObervers();
 
             if (TinyJ(self.selectors.mercadopagoCustomOpt).isChecked()) {
                 payment.switchMethod(self.constants.mercadopagoCustom);
@@ -338,8 +337,6 @@ var MercadoPagoCustom = (function () {
                 _cardNumber.getElem().dispatchEvent(_event);
             }
 
-            registerAjaxObervers();
-
             //show botão de retornar para lista de cartões
             returnListCard.show();
         }
@@ -375,27 +372,6 @@ var MercadoPagoCustom = (function () {
         function isIdeasa()
         {
             return (typeof payment !== self.constants.undefined);
-        }
-
-        function registerAjaxObervers() {
-            Ajax.Responders.register({
-                onCreate: function() {
-                    try {
-                        TinyJ(self.selectors.installments).disable();
-                    } catch (Exception) {
-                        showLogMercadoPago(Exception);
-                    }
-
-                },
-                onComplete: function() {
-                    try {
-                        TinyJ(self.selectors.installments).enable();
-                    } catch (Exception) {
-                        showLogMercadoPago(Exception);
-                    }
-
-                }
-            });
         }
 
         function defineInputs() {
