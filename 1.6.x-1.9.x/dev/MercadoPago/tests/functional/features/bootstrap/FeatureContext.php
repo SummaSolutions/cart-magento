@@ -16,6 +16,10 @@ class FeatureContext
     extends MagentoContext
     implements Context, SnippetAcceptingContext
 {
+
+    protected $_orderId;
+    protected $_order;
+
     /**
      * Initializes context.
      *
@@ -1059,6 +1063,84 @@ class FeatureContext
             $field->press();
         }
 
+    }
+
+
+    /**
+     * @When I send the Notification
+     * @var $order Mage_Sales_Model_Order
+     * @throws  ExpectationException
+     */
+    public function iSendTheNotification()
+    {
+        $url = $this->getSession()->getCurrentUrl();
+        $merchantOrder = substr($url, strpos($url, 'merchant_order_id=') + 18);
+        $pageText = $this->getSession()->getPage()->getText();
+        $orderId = (int) substr($pageText, strpos($pageText, 'Your order ') + 11, 9);
+        $notification = 'mercadopago/notifications/standard/topic/merchant_order/id/' . $merchantOrder;
+        $this->iAmOnPage($notification);
+        $state = Mage::getStoreConfig('payment/mercadopago/order_status_approved');
+        $order = Mage::getModel('sales/order')->loadByIncrementId($orderId);
+        $this->getSession()->wait(5000);
+
+        Mage::helper('mercadopago')->log("Order to update: " . $orderId, 'mercadopago.log');
+        if ($order->getState() != $state) {
+            throw new ExpectationException('The order isn\'t in the correct state', $this->getSession()->getDriver());
+        }
+
+        $this->_orderId = $order->getId();
+        $this->_order = $order;
+    }
+
+    /**
+     * @Given I fill the two card iframe fields
+     */
+    public function iFillTheTwoCardIframeFields()
+    {
+        $page = $this->getSession()->getPage();
+
+        $page->selectFieldOption('paymentMethodOption1', 'visa');
+        $this->getSession()->wait(2000);
+        $page->selectFieldOption('paymentMethodOption2', 'master');
+    }
+
+    /**
+     * @Then I go to the Order
+     */
+    public function iGoToTheOrder()
+    {
+        $orderId = $this->_orderId;
+        $order = $this->_order;
+        $invoices = $order->getInvoiceCollection()->setPageSize(1)->setCurPage(1)->load()->getItems();
+        $invoice = array_pop($invoices);
+        $invoiceId = $invoice->getId();
+        $url = "index.php/admin/sales_order_creditmemo/new/order_id/" . $orderId . "/invoice_id/" . $invoiceId;
+        $this->iAmOnPage($url);
+    }
+
+    /**
+     * @Then Order must have credit memos
+     */
+    public function orderMustHaveCreditMemos()
+    {
+        $order = $this->_order;
+        $creditMemos = $order->getCreditmemosCollection();
+
+        if ($creditMemos === false) {
+            throw new ExpectationException('The order doesn\'t have any credit memos', $this->getSession()->getDriver());
+        }
+    }
+
+    /**
+     * @Then Order must be in the correct state
+     */
+    public function orderMustBeInTheCorrectState()
+    {
+        $state = Mage::getStoreConfig('payment/mercadopago/order_status_refunded');
+        $order = $this->_order;
+        if ($order->getState() != $state) {
+            throw new ExpectationException('The order isn\'t in the correct state', $this->getSession()->getDriver());
+        }
     }
 
 }
