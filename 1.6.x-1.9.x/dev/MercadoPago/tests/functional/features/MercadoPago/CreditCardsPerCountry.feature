@@ -24,8 +24,11 @@ Feature: Payment results in MercadoPago Custom Checkout
     And I fill text field "docNumber" with "<doc_number>"
     And I fill text field "securityCode" with "123"
     And I select option field "cardExpirationYear" with "2018"
+    And I wait for "5" seconds
     And I select installment "1"
+    And I wait for "5" seconds
     And I press "#payment-buttons-container .button" element
+    And I wait for "5" seconds
 
     When I press "#review-buttons-container .button" element
     And I wait for "20" seconds
