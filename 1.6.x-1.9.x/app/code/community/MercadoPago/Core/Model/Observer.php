@@ -203,9 +203,16 @@ class MercadoPago_Core_Model_Observer
             return;
         }
         $orderStatus = $order->getData('status');
-        $orderPaymentStatus = $order->getPayment()->getData('additional_information')['status'];
+        $additionalInformation = $order->getPayment()->getAdditionalInformation();
 
-        $paymentID = $order->getPayment()->getData('additional_information')['payment_id_detail'];
+        $orderPaymentStatus = isset($additionalInformation['status']) ? $additionalInformation['status'] : null ;
+        $paymentID = isset($additionalInformation['payment_id_detail']) ? $additionalInformation['payment_id_detail'] : null ;
+
+        $refundAvailable = Mage::getStoreConfig('payment/mercadopago/refund_available');
+        if ($refundAvailable & $paymentID == null){
+            $this->_getSession()->addWarning(__('The cancellation will be made through Magento. It wasn\'t possible to cancel on MercadoPago'));
+            return;
+        }
 
         if (!($orderPaymentStatus == null || $paymentID == null)) {
 
